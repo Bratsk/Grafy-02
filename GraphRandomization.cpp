@@ -10,6 +10,7 @@ GraphRandomization::~GraphRandomization()
         delete [] Matrix[i];
     delete [] Matrix;
 }
+/*Tutaj tak samo jak w poprzednim zestawie tworzy graf i rysuje*/
 void GraphRandomization::MakeAndGenerate()
 {
     int n, l;
@@ -36,6 +37,7 @@ void GraphRandomization::MakeAndGenerate()
     graph.close();
     //GenerateGraphEnd(graph);
 }
+/*Tak samo jak w poprzednim zestawie*/
 void GraphRandomization::GenerateAsMatrixNL()
 {
      int edge = _NumberOfEdges;
@@ -63,33 +65,38 @@ void GraphRandomization::GenerateAsMatrixNL()
             std::cout << Matrix[i][j] << " ";}
         std::cout << std::endl;}
 }
-
 void GraphRandomization::Randomize()
 {
     int i_1, j_1, i_2, j_2;
     bool isTruefirst=false;
+/*Losuje pierwsze 2 wierzcholki do randomizacji i 
+sprawdza czy jest rowne 1 (czyli czy sa polaczone)*/
     while(isTruefirst==false){
         i_1 = rand()%_NumberOfVertices;
         j_1 = rand()%_NumberOfVertices;
+        /*Sprawdza czy nie wylosowane krawedzie nie sa te same*/
         if(i_1==j_1)
             continue;
+        /*Sprawdza czy jest rowne 1 (czyli czy sa polaczone) */
         isTruefirst = Matrix[i_1][j_1];
     }
 
-    //int counter = 8;|| counter>0
+/*Losuje kolejne 2 wierzcholki do randomizacji i */
     bool isTruesecond = false;
     while(isTruesecond==false){
         i_2 = rand()%_NumberOfVertices;
         j_2 = rand()%_NumberOfVertices;
-        //std::cout << isTruesecond << " ";
-        if(i_2 == j_2){//std::cout << "tu?\n";
-            continue;}
-        if(i_1==i_2 || j_1==j_2 || i_1 == j_2 || i_2 == j_1){//std::cout << "czy tu?\n";
-            continue;}
-        if(Matrix[i_1][j_2]==1 || Matrix[i_2][j_1]==1 ){//std::cout << "czy moze tu?\n";
-            continue;}
+        /*Sprawdza czy nie wylosowane krawedzie nie sa te same*/
+        if(i_2 == j_2)
+            continue;
+        /*Sprawdza czy ktorys z wylosowanych krawedzi nie jest rowny wczesniej wylosowanemu*/
+        if(i_1==i_2 || j_1==j_2 || i_1 == j_2 || i_2 == j_1)
+            continue;
+        /*Sprawdza czy sposob wylosowych krawedzi nie jest juz polaczony*/
+        if(Matrix[i_1][j_2]==1 || Matrix[i_2][j_1]==1 )
+            continue;
+        /*Sprawdza czy jest rowne 1 (czyli czy sa polaczone) */
         isTruesecond = Matrix[i_2][j_2];
-       // counter--;
     }
     std::cout << "\n(" << i_1+1 << "," << j_1+1 << ") i ";
     std::cout << "(" << i_2+1 << "," << j_2+1 << ")\n\n";
