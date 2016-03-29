@@ -83,9 +83,22 @@ sprawdza czy jest rowne 1 (czyli czy sa polaczone)*/
 
 /*Losuje kolejne 2 wierzcholki do randomizacji i */
     bool isTruesecond = false;
+    int counter=0;
     while(isTruesecond==false){
         i_2 = rand()%_NumberOfVertices;
         j_2 = rand()%_NumberOfVertices;
+        counter++;
+        /*Tutaj mamy zmienna counter na wypadek, gdyby doszlo do nieskonczonej petli. 
+        Jesli counter==50, oznacza ze petla jest nieskonczona, czyli nie da sie
+        zrandomizowac grafu*/
+        if(counter==50){
+            std::cout << "Grafu nie da sie zrandomizowac\n";
+            std::ofstream graph;
+            graph.open("RandomizationGraph.tex", std::ios::app);
+            graph << "\\end{document}\n";
+            graph.close();
+            return;
+        }
         /*Sprawdza czy nie wylosowane krawedzie nie sa te same*/
         if(i_2 == j_2)
             continue;
