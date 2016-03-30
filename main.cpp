@@ -24,9 +24,12 @@ int main(int argc, char ** argv)
 
                     int NSize = 4;
                     int Tab[4] = {1, 2, 2, 3};
-                    CheckSeqAndGenerate *SeqToCheck = new CheckSeqAndGenerate(Tab, NSize);
-                    bool isGraph = SeqToCheck->CheckSeq();
+                    GraphSequence *Seq = new GraphSequence(Tab, NSize);
+                    /* sprawdzanie czy sekwencja jest graficzna*/
+                    bool isGraph = Seq->isGraphical();
+                    CheckSeqAndGenerate *SeqToCheck = new CheckSeqAndGenerate(*Seq);
                     SeqToCheck->GenerateGraph(isGraph);
+                    delete Seq;
                     delete SeqToCheck;
                     break;
                     }
@@ -43,7 +46,14 @@ int main(int argc, char ** argv)
             case 4: /** converting to incidence matrix*/
                     break;
 			case 5:
+			    {
+			        GraphKRegular * kRegular = GraphKRegular::createGraphKRegular();
+			        CheckSeqAndGenerate convertedKRegular = CheckSeqAndGenerate(*kRegular);
+			        convertedKRegular.GenerateGraph(true);
+                    GraphKRegular::removeGraph(kRegular);
                     break;
+			    }
+
 			case 6:
                     break;
 			default: option = 0; break;
@@ -53,4 +63,3 @@ int main(int argc, char ** argv)
 	delete graph;
 	return 0;
 }
-
